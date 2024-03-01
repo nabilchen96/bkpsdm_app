@@ -16,7 +16,7 @@
     <!-- Style -->
     <link rel="stylesheet" href="login-form-02/css/style.css">
 
-    <title>Sistem Informasi SPI</title>
+    <title>Aplikasi AMI Poltekbang Palembang</title>
   </head>
   <body>
   

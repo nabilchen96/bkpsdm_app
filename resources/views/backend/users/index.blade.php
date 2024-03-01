@@ -20,6 +20,7 @@
         th,
         td {
             white-space: nowrap !important;
+            vertical-align: middle !important;
         }
     </style>
 @endpush
@@ -108,6 +109,11 @@
             </div>
         </div>
     </div>
+    {{-- <span style="
+    width: 200px !important;
+    white-space: normal;
+    display: inline-block !important;
+    "></span> --}}
 @endsection
 @push('script')
     <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
@@ -144,6 +150,7 @@
                     },
                     {
                         render: function(data, type, row, meta) {
+                            
                             if (row.role == "Admin") {
                                 return `<span class="badge badge-success">${row.role}</span>`
                             } else if (row.role == "Pegawai") {
