@@ -28,7 +28,7 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
-            <h3>Login to <br><strong>Sistem Informasi SPI</strong></h3>
+            <h3>Login to <br><strong>Sistem Informasi AMI</strong></h3>
             <p>Login untuk mengakses Aplikasi</p>
             
             <br>
