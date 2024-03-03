@@ -231,8 +231,12 @@
                         })
 
                         $("#modal").modal("hide");
+                        
                         $('#myTable').DataTable().clear().destroy();
                         getData()
+                        setTimeout(() => {
+                            location.reload(res.data.respon);
+                        }, 1500);
 
                     } else {
 
