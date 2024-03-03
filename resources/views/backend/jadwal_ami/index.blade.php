@@ -46,11 +46,11 @@
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Judul</th>
-                                    <th>Kurikulum</th>
-                                    <th>User</th>
+                                    <th>Nama Audit</th>
+                                    <th>Instrumen AMI</th>
                                     <th>Auditor</th>
-                                    <th>Tgl Upload Dokumen</th>
+                                    <th>Auditee</th>
+                                    <th>Periode Audit</th>
                                     <th>Aktif?</th>
                                     <th width="5%"></th>
                                     <th width="5%"></th>
@@ -152,7 +152,7 @@
                             </div>
                             <div class="form-group">
                             <label>Auditor 3</label>
-                                <select name="auditor_tiga" class="form-control ">
+                                <select id="auditor_tiga" name="auditor_tiga" class="form-control ">
                                     <option value="">-Pilih-</option>
                                     @foreach ($auditors as $aud1)
                                         <option value="{{ $aud1->id }}">{{ $aud1->name }}</option>
@@ -215,10 +215,6 @@
                         data: "nama_kurikulum"
                     },
                     {
-                        data: "name"
-                    },
-
-                    {
                         render: function(data, type, row, meta) {
                             return `
                                 <ul>
@@ -229,7 +225,9 @@
                             `
                         }
                     },
-
+                    {
+                        data: "prodi"
+                    },
                     {
                         render: function(data, type, row, meta) {
                             return `
