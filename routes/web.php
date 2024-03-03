@@ -36,6 +36,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-user', 'App\Http\Controllers\UserController@update');
     Route::post('/delete-user', 'App\Http\Controllers\UserController@delete');
 
+    // GRUP INSTRUMEN
+    Route::get('/grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@index');
+    Route::get('/data-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@data');
+    Route::post('/store-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@store');
+    Route::post('/update-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@update');
+    Route::post('/delete-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@delete');
+
 });
 
 //LOGOUT

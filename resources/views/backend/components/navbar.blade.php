@@ -21,6 +21,11 @@
                                 <span class="menu-title">User</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('grup_instrumen') }}">
+                                <span class="menu-title">Grup Instrumen</span>
+                            </a>
+                        </li>
                        
                     </ul>
                 </div>
