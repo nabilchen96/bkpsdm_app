@@ -11,29 +11,33 @@ use Illuminate\Support\Facades\Validator;
 
 class ButirInstrumenController extends Controller
 {
-    public function index()
+    public function index($kurikulum_id)
     {
-        return view('backend.butir_instrumens.index');
-    }
-
-    public function data()
-    {
-
         $grup_instrumen = GrupInstrumen::all();
 
+        return view('backend.butir_instrumens.index', [
+            'kurikulum_id' => $kurikulum_id,
+            'grup_instrumen' => $grup_instrumen,
+        ]);
+    }
+
+    public function data($kurikulum_id)
+    {
+
         $butir_instrumens = DB::table('butir_instrumens')
-            ->select('butir_instrumens.*', 'users.name', 'grup_instrumens.kode_instrumen')
+            ->select('butir_instrumens.*', 'users.name', 'grup_instrumens.nama_grup_instrumen', 'kurikulum_instrumens.nama_kurikulum')
             ->leftJoin('grup_instrumens', 'grup_instrumens.id', 'butir_instrumens.grup_instrumen_id')
-            ->leftJoin('users', 'users.id', 'butir_instrumens.insert_by');
+            ->leftJoin('kurikulum_instrumens', 'kurikulum_instrumens.id', 'butir_instrumens.kurikulum_instrumen_id')
+            ->leftJoin('users', 'users.id', 'butir_instrumens.insert_by')
+            ->where('butir_instrumens.kurikulum_instrumen_id',$kurikulum_id);
 
         $butir_instrumens = $butir_instrumens->get();
 
-        return response()->json(['data' => $butir_instrumens, 'grup_instrumen' => $grup_instrumen]);
+        return response()->json(['data' => $butir_instrumens]);
     }
 
     public function store(Request $request)
     {
-
 
         $validator = Validator::make($request->all(), [
             'kode_instrumen'   => 'required',
@@ -50,8 +54,9 @@ class ButirInstrumenController extends Controller
             $data = ButirInstrumen::create([
                 'kode_instrumen'   => $request->kode_instrumen,
                 'nama_instrumen'   => $request->nama_instrumen,
-                'grup_instrumen_id' => $request->grup_instrumen_id,
                 'keterangan'    => $request->keterangan,
+                'grup_instrumen_id'    => $request->grup_instrumen_id,
+                'kurikulum_instrumen_id'    => $request->kurikulum_id,
                 'insert_by'            => Auth::user()->id,
             ]);
 
@@ -62,6 +67,17 @@ class ButirInstrumenController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function edit($id)
+    {
+        $grup_instrumen = GrupInstrumen::all();
+        $data = ButirInstrumen::find($id);
+
+        return view('backend.butir_instrumens.edit', [
+            'data' => $data,
+            'grup_instrumen' => $grup_instrumen,
+        ]);
     }
 
     public function update(Request $request)

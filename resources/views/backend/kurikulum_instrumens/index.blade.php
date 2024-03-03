@@ -146,7 +146,7 @@
                     {
                    render: function (data, type, row, meta) {
                         return `<a 
-                                href="edit-aksigrup/${row.id}">
+                                href="butir_instrumen/${row.id}">
                             <i style="font-size: 1.5rem;" class="text-primary bi bi-info-circle"></i>
                         </a>`
                     }

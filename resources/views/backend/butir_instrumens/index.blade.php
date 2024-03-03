@@ -29,7 +29,8 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data Butir Instrumen</h3>
+                    <h3 class="font-weight-bold">Data Butir Instrumen </h3>
+                    
                 </div>
             </div>
         </div>
@@ -46,7 +47,9 @@
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Name</th>
+                                    <th>Grup</th>
+                                    <th>Kode</th>
+                                    <th>Instrumen</th>
                                     <th>User</th>
                                     <th width="5%"></th>
                                     <th width="5%"></th>
@@ -60,20 +63,42 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form id="form">
                     <div class="modal-header p-3">
                         <h5 class="modal-title m-2" id="exampleModalLabel">User Form</h5>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" id="kurikulum_id" name="kurikulum_id" value="{{ $kurikulum_id }}">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Grup Instrumen</label>
-                            <input name="nama_grup_instrumen" id="nama_grup_instrumen" type="text" placeholder="Nama Grup Instrumen"
+                            <label for="exampleInputEmail1">Kode Instrumen</label>
+                            <input name="kode_instrumen" id="kode_instrumen" type="text" placeholder="Kode Instrumen"
                                 class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="nama_grup_instrumen_alert"></span>
+                            <span class="text-danger error" style="font-size: 12px;" id="kode_instrumen_alert"></span>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Instrumen</label>
+                            <input name="nama_instrumen" id="nama_instrumen" type="text" placeholder="Nama Instrumen"
+                                class="form-control form-control-sm" required>
+                            <span class="text-danger error" style="font-size: 12px;" id="nama_instrumen_alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Grup Instrumen</label>
+                            <select class="form-control" name="grup_instrumen_id" id="grup_instrumen_id">
+                                @foreach ($grup_instrumen as $gi)
+                                    <option value="{{ $gi->id }}">{{ $gi->nama_grup_instrumen }}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger error" style="font-size: 12px;" id="grup_instrumen_id_alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Keterangan</label>
+                           <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="10"></textarea>
+                           <span class="text-danger error" style="font-size: 12px;" id="keterangan_alert"></span>
+                        </div>
+                        
                         
                     </div>
                     <div class="modal-footer p-3">
@@ -112,9 +137,10 @@
         })
 
         function getData() {
+            var kurikulum_id = document.getElementById('kurikulum_id').value
             $("#myTable").DataTable({
                 "ordering": false,
-                ajax: '/data-grup_instrumen',
+                ajax: '/data-butir_instrumen/'+ kurikulum_id,
                 processing: true,
                 scrollX: true,
                 scrollCollapse: true,
@@ -131,13 +157,18 @@
                         data: "nama_grup_instrumen"
                     },
                     {
+                        data: "kode_instrumen"
+                    },
+                    {
+                        data: "nama_instrumen"
+                    },
+                    {
                         data: "name"
                     },
 
                     {
                         render: function(data, type, row, meta) {
-                            return `<a data-toggle="modal" data-target="#modal"
-                                    data-bs-id=` + (row.id) + ` href="javascript:void(0)">
+                            return `<a href="edit-butir_instrumen/${row.id}">
                                     <i style="font-size: 1.5rem;" class="text-success bi bi-grid"></i>
                                 </a>`
                         }
@@ -170,7 +201,7 @@
             if (recipient) {
                 var modal = $(this)
                 modal.find('#id').val(cokData[0].id)
-                modal.find('#nama_grup_instrumen').val(cokData[0].nama_grup_instrumen)
+                modal.find('#nama_butir_instrumen').val(cokData[0].nama_butir_instrumen)
             }
         })
 
@@ -184,7 +215,7 @@
 
             axios({
                     method: 'post',
-                    url: formData.get('id') == '' ? '/store-grup_instrumen' : '/update-grup_instrumen',
+                    url: formData.get('id') == '' ? '/store-butir_instrumen' : '/update-butir_instrumen',
                     data: formData,
                 })
                 .then(function(res) {
@@ -230,7 +261,7 @@
             }).then((result) => {
 
                 if (result.value) {
-                    axios.post('/delete-grup_instrumen', {
+                    axios.post('/delete-butir_instrumen', {
                             id
                         })
                         .then((response) => {
