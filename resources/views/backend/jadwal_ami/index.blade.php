@@ -29,7 +29,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data User</h3>
+                    <h3 class="font-weight-bold">Data Jadwal AMI</h3>
                 </div>
             </div>
         </div>
@@ -46,10 +46,12 @@
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>NIP</th>
-                                    <th>Role</th>
+                                    <th>Judul</th>
+                                    <th>Kurikulum</th>
+                                    <th>User</th>
+                                    <th>Auditor</th>
+                                    <th>Tgl Upload Dokumen</th>
+                                    <th>Aktif?</th>
                                     <th width="5%"></th>
                                     <th width="5%"></th>
                                 </tr>
@@ -62,44 +64,111 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form id="form">
                     <div class="modal-header p-3">
-                        <h5 class="modal-title m-2" id="exampleModalLabel">User Form</h5>
+                        <h5 class="modal-title m-2" id="exampleModalLabel">Jadwal Form</h5>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input name="email" id="email" type="email" placeholder="email"
+                            <label for="exampleInputEmail1">Judul</label>
+                            <input name="judul" id="judul" type="text" placeholder="Judul"
                                 class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="email_alert"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Lengkap</label>
-                            <input name="name" id="name" type="text" placeholder="Nama Lengkap"
-                                class="form-control form-control-sm" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">NIP</label>
-                            <input name="nip" id="nip" type="text" placeholder="NIP"
-                                class="form-control form-control-sm" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input name="password" id="password" type="password" placeholder="Password"
-                                class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="password_alert"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Role</label>
-                            <select name="role" class="form-control" id="role" required>
-                                <option value="Admin">Admin</option>
-                                <option value="Auditor">Auditor</option>
-                            </select>
+                            <span class="text-danger error" style="font-size: 12px;" id="judul_alert"></span>
                         </div>
 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Periode</label>
+                            <select name="priode" id="priode" class="form-control" required>
+                                <option value="">--Pilih--</option>
+                                <?php
+                                    for($i=date('Y'); $i>=date('Y')-5; $i-=1){
+                                ?>
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                <?php } ?>
+                            </select>
+                            <span class="text-danger error" style="font-size: 12px;" id="priode_alert"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Program Studi</label>
+                            <select name="prodi" id="prodi" class="form-control" required>
+                                <option value="">--Pilih--</option>
+                                <option value="Teknologi Rekayasa Bandar Udara">Teknologi Rekayasa Bandar Udara</option>
+                                <option value="Manajemen Bandar Udara">Manajemen Bandar Udara</option>
+                                <option value="Penyelamatan dan Pemadam Kebakaran Penerbangan">Penyelamatan dan Pemadam Kebakaran Penerbangan</option>
+                               
+                            </select>
+                            <span class="text-danger error" style="font-size: 12px;" id="prodi_alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Kurikulum Instrumen</label>
+                                <select name="kurikulum_instrumen_id" id="kurikulum_instrumen_id" class="form-control ">
+                                    <option value="">-Pilih-</option>
+                                    @foreach ($kurikulums as $kr)
+                                        <option value="{{ $kr->id }}">{{ $kr->nama_kurikulum }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error" style="font-size: 12px;" id="kurikulum_instrumen_id_alert"></span>
+                            </div>
+
+                        <fieldset class="form-group border p-3">
+                            <legend class="w-auto px-2">Jadwal Upload Dokumen</legend>
+                            <div class="form-group">
+                                <label>Tgl Awal Upload</label>
+                                <input name="tgl_awal_upload" id="tgl_awal_upload" type="date" class="form-control">
+                                <span class="text-danger error" style="font-size: 12px;" id="tgl_awal_upload_alert"></span>
+                              </div>
+                
+                              <div class="form-group">
+                                <label>Tgl Akhir Upload</label>
+                                <input name="tgl_akhir_upload" id="tgl_akhir_upload" type="date" class="form-control">
+                                <span class="text-danger error" style="font-size: 12px;" id="tgl_akhir_upload_alert"></span>
+                              </div>
+                        </fieldset>
+                        <fieldset class="form-group border p-3">
+                            <legend class="w-auto px-2">Auditor</legend>
+                            <div class="form-group">
+                            <label>Auditor 1</label>
+                                <select name="auditor_satu" id="auditor_satu" class="form-control ">
+                                    <option value="">-Pilih-</option>
+                                    @foreach ($auditors as $aud1)
+                                        <option value="{{ $aud1->id }}">{{ $aud1->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error" style="font-size: 12px;" id="auditor_satu_alert"></span>
+                            </div>
+                            <div class="form-group">
+                            <label>Auditor 2</label>
+                                <select name="auditor_dua" id="auditor_dua" class="form-control">
+                                    <option value="">-Pilih-</option>
+                                    @foreach ($auditors as $aud2)
+                                        <option value="{{ $aud2->id }}">{{ $aud2->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error" style="font-size: 12px;" id="auditor_dua_alert"></span>
+                            </div>
+                            <div class="form-group">
+                            <label>Auditor 3</label>
+                                <select name="auditor_tiga" class="form-control ">
+                                    <option value="">-Pilih-</option>
+                                    @foreach ($auditors as $aud1)
+                                        <option value="{{ $aud1->id }}">{{ $aud1->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error" style="font-size: 12px;" id="auditor_tiga_alert"></span>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Aktifkan?</label>
+                            <select class="form-control" name="status_aktif" id="status_aktif">
+                                <option value="1">Ya</option>
+                                <option value="0">Tidak</option>
+                            </select>
+                            <span class="text-danger error" style="font-size: 12px;" id="status_aktif_alert"></span>
+                        </div>
                     </div>
                     <div class="modal-footer p-3">
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
@@ -126,7 +195,7 @@
         function getData() {
             $("#myTable").DataTable({
                 "ordering": false,
-                ajax: '/data-user',
+                ajax: '/data-jadwal_ami',
                 processing: true,
                 scrollX: true,
                 scrollCollapse: true,
@@ -140,21 +209,42 @@
                         }
                     },
                     {
+                        data: "judul"
+                    },
+                    {
+                        data: "nama_kurikulum"
+                    },
+                    {
                         data: "name"
                     },
+
                     {
-                        data: "email"
+                        render: function(data, type, row, meta) {
+                            return `
+                                <ul>
+                                    <li>${row.auditor1}</li>
+                                    <li>${row.auditor2}</li>
+                                    <li>${row.auditor3}</li>
+                                </ul>
+                            `
+                        }
                     },
+
                     {
-                        data: "nip"
+                        render: function(data, type, row, meta) {
+                            return `
+                                ${row.tgl_awal_upload} s/d ${row.tgl_akhir_upload}
+                            `
+                        }
                     },
+
                     {
                         render: function(data, type, row, meta) {
                             
-                            if (row.role == "Admin") {
-                                return `<span class="badge badge-success">${row.role}</span>`
-                            } else if (row.role == "Auditor") {
-                                return `<span class="badge badge-primary">${row.role}</span>`
+                            if (row.status_aktif == "1") {
+                                return `<span class="badge badge-success">Ya</span>`
+                            } else if (row.status_aktif == "0") {
+                                return `<span class="badge badge-danger">Tidak</span>`
                             }
                         }
                     },
@@ -195,10 +285,16 @@
             if (recipient) {
                 var modal = $(this)
                 modal.find('#id').val(cokData[0].id)
-                modal.find('#email').val(cokData[0].email)
-                modal.find('#name').val(cokData[0].name)
-                modal.find('#role').val(cokData[0].role)
-                modal.find('#nip').val(cokData[0].nip)
+                modal.find('#judul').val(cokData[0].judul)
+                modal.find('#priode').val(cokData[0].priode)
+                modal.find('#prodi').val(cokData[0].prodi)
+                modal.find('#tgl_awal_upload').val(cokData[0].tgl_awal_upload)
+                modal.find('#tgl_akhir_upload').val(cokData[0].tgl_akhir_upload)
+                modal.find('#auditor_satu').val(cokData[0].auditor_satu)
+                modal.find('#auditor_dua').val(cokData[0].auditor_dua)
+                modal.find('#auditor_tiga').val(cokData[0].auditor_tiga)
+                modal.find('#kurikulum_instrumen_id').val(cokData[0].kurikulum_instrumen_id)
+                modal.find('#status_aktif').val(cokData[0].status_aktif)
             }
         })
 
@@ -212,7 +308,7 @@
 
             axios({
                     method: 'post',
-                    url: formData.get('id') == '' ? '/store-user' : '/update-user',
+                    url: formData.get('id') == '' ? '/store-jadwal_ami' : '/update-jadwal_ami',
                     data: formData,
                 })
                 .then(function(res) {
@@ -258,7 +354,7 @@
             }).then((result) => {
 
                 if (result.value) {
-                    axios.post('/delete-user', {
+                    axios.post('/delete-jadwal_ami', {
                             id
                         })
                         .then((response) => {

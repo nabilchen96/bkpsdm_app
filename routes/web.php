@@ -58,6 +58,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@update');
     Route::post('/delete-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@delete');
 
+    // JADWAL AMI
+    Route::get('/jadwal_ami', 'App\Http\Controllers\JadwalAmiController@index');
+    Route::get('/data-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@data');
+    Route::get('jadwal_ami/edit-jadwal_ami/{id}', 'App\Http\Controllers\JadwalAmiController@edit');
+    Route::post('/store-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@store');
+    Route::post('/update-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@update');
+    Route::post('/delete-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@delete');
+
 });
 
 //LOGOUT

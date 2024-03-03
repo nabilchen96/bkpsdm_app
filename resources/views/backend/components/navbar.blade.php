@@ -36,11 +36,23 @@
                 </div>
             </li>
         @endif
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('') }}">
-                <i class="bi bi-window-plus menu-icon"></i>
-                <span class="menu-title">AMI</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false"
+                    aria-controls="ui-basic">
+                    <i class="bi-window-plus menu-icon"></i>
+                    <span class="menu-title" style="margin-top: 7px;">AMI</span>
+                    <i style="margin-top: 7px;" class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic2">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('jadwal_ami') }}">
+                                <span class="menu-title">Jadwal AMI</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </li>
     </ul>
 </nav>
