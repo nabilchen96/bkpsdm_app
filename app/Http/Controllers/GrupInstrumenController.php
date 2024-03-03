@@ -32,7 +32,6 @@ class GrupInstrumenController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_grup_instrumen'   => 'required',
-            'email'      => 'unique:grup_instrumens'
         ]);
 
         if($validator->fails()){

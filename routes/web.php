@@ -43,6 +43,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@update');
     Route::post('/delete-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@delete');
 
+    // KURIKULUM INSTRUMEN
+    Route::get('/kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@index');
+    Route::get('/data-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@data');
+    Route::post('/store-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@store');
+    Route::post('/update-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@update');
+    Route::post('/delete-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@delete');
+
+    // BUTIR INSTRUMEN
+    Route::get('/butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@index');
+    Route::get('/data-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@data');
+    Route::post('/store-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@store');
+    Route::post('/update-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@update');
+    Route::post('/delete-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@delete');
+
 });
 
 //LOGOUT

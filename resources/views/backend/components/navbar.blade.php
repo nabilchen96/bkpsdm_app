@@ -26,6 +26,11 @@
                                 <span class="menu-title">Grup Instrumen</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('kurikulum_instrumen') }}">
+                                <span class="menu-title">Kurikulum Instrumen</span>
+                            </a>
+                        </li>
                        
                     </ul>
                 </div>
