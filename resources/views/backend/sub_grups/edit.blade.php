@@ -73,15 +73,6 @@
                             <span class="text-danger error" style="font-size: 12px;" id="grup_instrumen_id_alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Sub Grup Instrumen</label>
-                            <select class="form-control" name="sub_grup_id" id="sub_grup_id">
-                                @foreach ($sub_grup as $sg)
-                                    <option value="{{ $sg->id }}" {{ $data->sub_grup_id == $sg->id ? "selected" : "" }}>{{ $sg->nama_sub_grup }}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger error" style="font-size: 12px;" id="sub_grup_id_alert"></span>
-                        </div>
-                        <div class="form-group">
                             <label for="exampleInputEmail1">Keterangan</label>
                            <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="10">{{$data->keterangan}}</textarea>
                            <span class="text-danger error" style="font-size: 12px;" id="keterangan_alert"></span>

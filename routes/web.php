@@ -43,6 +43,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@update');
     Route::post('/delete-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@delete');
 
+    // SUB GRUP INSTRUMEN
+    Route::get('/sub_grup', 'App\Http\Controllers\SubGrupController@index');
+    Route::get('/data-sub_grup', 'App\Http\Controllers\SubGrupController@data');
+    Route::post('/store-sub_grup', 'App\Http\Controllers\SubGrupController@store');
+    Route::post('/update-sub_grup', 'App\Http\Controllers\SubGrupController@update');
+    Route::post('/delete-sub_grup', 'App\Http\Controllers\SubGrupController@delete');
+
     // KURIKULUM INSTRUMEN
     Route::get('/kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@index');
     Route::get('/data-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@data');

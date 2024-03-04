@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ButirInstrumen;
 use App\Models\GrupInstrumen;
+use App\Models\SubGrup;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -14,10 +15,12 @@ class ButirInstrumenController extends Controller
     public function index($kurikulum_id)
     {
         $grup_instrumen = GrupInstrumen::all();
+        $sub_grup = SubGrup::all();
 
         return view('backend.butir_instrumens.index', [
             'kurikulum_id' => $kurikulum_id,
             'grup_instrumen' => $grup_instrumen,
+            'sub_grup' => $sub_grup
         ]);
     }
 
@@ -25,8 +28,9 @@ class ButirInstrumenController extends Controller
     {
 
         $butir_instrumens = DB::table('butir_instrumens')
-            ->select('butir_instrumens.*', 'users.name', 'grup_instrumens.nama_grup_instrumen', 'kurikulum_instrumens.nama_kurikulum')
+            ->select('butir_instrumens.*', 'users.name', 'grup_instrumens.nama_grup_instrumen', 'kurikulum_instrumens.nama_kurikulum','sub_grups.nama_sub_grup')
             ->leftJoin('grup_instrumens', 'grup_instrumens.id', 'butir_instrumens.grup_instrumen_id')
+            ->leftJoin('sub_grups', 'sub_grups.id', 'butir_instrumens.sub_grup_id')
             ->leftJoin('kurikulum_instrumens', 'kurikulum_instrumens.id', 'butir_instrumens.kurikulum_instrumen_id')
             ->leftJoin('users', 'users.id', 'butir_instrumens.insert_by')
             ->where('butir_instrumens.kurikulum_instrumen_id',$kurikulum_id);
@@ -56,6 +60,7 @@ class ButirInstrumenController extends Controller
                 'nama_instrumen'   => $request->nama_instrumen,
                 'keterangan'    => $request->keterangan,
                 'grup_instrumen_id'    => $request->grup_instrumen_id,
+                'sub_grup_id'    => $request->sub_grup_id,
                 'kurikulum_instrumen_id'    => $request->kurikulum_id,
                 'insert_by'            => Auth::user()->id,
             ]);
@@ -73,10 +78,12 @@ class ButirInstrumenController extends Controller
     {
         $grup_instrumen = GrupInstrumen::all();
         $data = ButirInstrumen::find($id);
+        $sub_grup = SubGrup::all();
 
         return view('backend.butir_instrumens.edit', [
             'data' => $data,
             'grup_instrumen' => $grup_instrumen,
+            'sub_grup' => $sub_grup,
         ]);
     }
 
@@ -99,6 +106,7 @@ class ButirInstrumenController extends Controller
                 'kode_instrumen'   => $request->kode_instrumen,
                 'nama_instrumen'   => $request->nama_instrumen,
                 'grup_instrumen_id' => $request->grup_instrumen_id,
+                'sub_grup_id'    => $request->sub_grup_id,
                 'keterangan'    => $request->keterangan,
             ]);
 
