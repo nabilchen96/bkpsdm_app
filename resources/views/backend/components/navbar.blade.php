@@ -6,6 +6,11 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+        <style>
+            .sidebar .nav .nav-item .nav-link {
+                white-space: normal;
+            }
+        </style>
         @if (Auth::user()->role == 'Admin')
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
@@ -23,12 +28,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('grup_instrumen') }}">
-                                <span class="menu-title">Grup Instrumen</span>
+                                <span class="menu-title">Grup</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('kurikulum_instrumen') }}">
-                                <span class="menu-title">Kurikulum Instrumen</span>
+                                <span class="menu-title">Kurikulum</span>
                             </a>
                         </li>
                        
@@ -50,7 +55,11 @@
                                 <span class="menu-title">Jadwal AMI</span>
                             </a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('penilaian_ami') }}">
+                                <span class="menu-title">Penilaian AMI</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

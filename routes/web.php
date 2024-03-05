@@ -66,6 +66,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@update');
     Route::post('/delete-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@delete');
 
+    // PENILAIAN AMI
+    Route::get('/penilaian_ami', 'App\Http\Controllers\PenilaianController@index');
+    Route::get('/penilaian_ami/{id}', 'App\Http\Controllers\PenilaianController@detail');
+    Route::get('/data-penilaian_ami/{id}', 'App\Http\Controllers\PenilaianController@data');
+    Route::post('/store-penilaian_ami', 'App\Http\Controllers\PenilaianController@store');
+    Route::post('/update-penilaian_ami', 'App\Http\Controllers\PenilaianController@update');
+    Route::post('/delete-penilaian_ami', 'App\Http\Controllers\PenilaianController@delete');
 });
 
 //LOGOUT
