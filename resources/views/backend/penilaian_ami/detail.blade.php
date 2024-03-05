@@ -23,7 +23,12 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data Penilaian AMI</h3>
+                    <h3 class="font-weight-bold">
+                        <a href="{{ url('penilaian_ami') }}">
+                            <i class="bi bi-arrow-left text-dark"></i>
+                        </a>
+                        Detail Penilaian AMI
+                    </h3>
                 </div>
             </div>
         </div>
@@ -32,34 +37,36 @@
         <div class="col-12 mt-4">
             <div class="card w-100">
                 <div class="card-body">
-                    <table class="mb-1 table table-striped">
-                        <tr>
-                            <td width="25%">Judul Audit</td>
-                            <td>:</td>
-                            <td width="25%">{{ $jadwal->judul }}</td>
-                            <td width="25%">Periode Audit</td>
-                            <td>:</td>
-                            <td width="25%">{{ $jadwal->tgl_awal_upload }} s/d
-                                {{ $jadwal->tgl_akhir_upload }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kurikulum</td>
-                            <td>:</td>
-                            <td>
-                                {{ $jadwal->nama_kurikulum }}
-                            </td>
-                            <td>Auditee</td>
-                            <td>:</td>
-                            <td>{{ $jadwal->prodi }}</td>
-                        </tr>
-                    </table>
                     <div class="table-responsive">
+                        <table class="mb-1 table table-striped">
+                            <tr>
+                                <td width="25%">Judul Audit</td>
+                                <td>:</td>
+                                <td width="25%">{{ $jadwal->judul }}</td>
+                                <td width="25%">Periode Audit</td>
+                                <td>:</td>
+                                <td width="25%">{{ $jadwal->tgl_awal_upload }} s/d
+                                    {{ $jadwal->tgl_akhir_upload }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Kurikulum</td>
+                                <td>:</td>
+                                <td>
+                                    {{ $jadwal->nama_kurikulum }}
+                                </td>
+                                <td>Auditee</td>
+                                <td>:</td>
+                                <td>{{ $jadwal->prodi }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="spider-chart-container" class="border" style="padding-top: 20px; width: 100%; margin: 0 auto">
+                    </div>
+                    <div class="table-responsive mt-4">
                         <table id="myTable" class="table table-bordered table-striped" style="width: 100%;">
                             <thead class="bg-primary text-white">
                                 <tr>
-                                    {{-- <th width="5%"></th> --}}
-                                    {{-- <th>Grup</th> --}}
                                     <th></th>
                                     <th></th>
                                     <th>Pertanyaan</th>
@@ -71,29 +78,33 @@
                                 @php
                                     $namagrup = '';
                                     $namagrupprev = '';
+                                    $namasubgrup = '';
+                                    $namasubgrupprev = '';
                                     $totalRows = count($data);
                                 @endphp
 
                                 @foreach ($data as $k => $item)
                                     @php
                                         $namagrup = $item->nama_grup_instrumen;
+                                        $namasubgrup = $item->nama_sub_grup;
                                     @endphp
                                     @if ($namagrup != $namagrupprev)
                                         <tr style="background: green !important;">
                                             <td colspan="5"><b>{{ $item->nama_grup_instrumen }}</b></td>
                                         </tr>
                                     @endif
-                                    @if ($item->nama_grup_instrumen != $namagrupprev)
+                                    @if ($item->nama_sub_grup != $namasubgrupprev)
                                         @php
                                             $groupRowCount = 0;
                                             foreach ($data as $row) {
-                                                if ($row->nama_grup_instrumen == $item->nama_grup_instrumen) {
+                                                if ($row->nama_sub_grup == $item->nama_sub_grup) {
                                                     $groupRowCount++;
                                                 }
                                             }
                                         @endphp
                                         <tr>
-                                            <td rowspan="{{ $groupRowCount }}"><b>{{ $item->nama_grup_instrumen }}</b></td>
+                                            <td rowspan="{{ $groupRowCount }}"><b>{{ $item->nama_sub_grup }}</b>
+                                            </td>
                                             <td>{{ $item->kode_instrumen }}</td>
                                             <td>{{ $item->nama_instrumen }}</td>
                                             <form action="{{ url('store-penilaian_ami') }}" method="POST">
@@ -107,6 +118,8 @@
                                                         value="{{ $item->kurikulum_instrumen_id }}">
                                                     <input type="hidden" name="jadwal_ami_id"
                                                         value="{{ $item->jadwal_ami_id }}">
+                                                    <input type="hidden" name="sub_grup_id"
+                                                        value="{{ $item->sub_grup_id }}">
                                                     <input name="skor" type="number" max="4" maxlength="4"
                                                         value="{{ $item->skor }}" class="form-control">
                                                 </td>
@@ -118,6 +131,7 @@
                                         </tr>
                                         @php
                                             $namagrupprev = $item->nama_grup_instrumen;
+                                            $namasubgrupprev = $item->nama_sub_grup;
                                         @endphp
                                     @else
                                         <tr>
@@ -134,6 +148,8 @@
                                                         value="{{ $item->kurikulum_instrumen_id }}">
                                                     <input type="hidden" name="jadwal_ami_id"
                                                         value="{{ $item->jadwal_ami_id }}">
+                                                    <input type="hidden" name="sub_grup_id"
+                                                        value="{{ $item->sub_grup_id }}">
                                                     <input name="skor" type="number" max="4" maxlength="4"
                                                         value="{{ $item->skor }}" class="form-control">
                                                 </td>
@@ -154,6 +170,24 @@
 
                         </table>
                     </div>
+                    {{-- <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home"
+                                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Data</button>
+                            <button class="nav-link" id="nav-profile-tab" data-toggle="tab" data-target="#nav-profile"
+                                type="button" role="tab" aria-controls="nav-profile"
+                                aria-selected="false">Chart</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                        </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -167,106 +201,68 @@
 @endsection
 @push('script')
     <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             getData()
         })
 
-        function getData() {
-            // Mengambil URL saat ini
-            var url = window.location.href;
+        // Mengambil URL saat ini
+        var url = window.location.href;
 
-            // Membagi URL menjadi array menggunakan '/' sebagai pemisah
-            var urlParts = url.split('/');
+        // Membagi URL menjadi array menggunakan '/' sebagai pemisah
+        var urlParts = url.split('/');
 
-            // Mengambil elemen terakhir dari array yang merupakan angka
-            var angka = urlParts[urlParts.length - 1];
+        // Mengambil elemen terakhir dari array yang merupakan angka
+        var angka = urlParts[urlParts.length - 1];
 
-            $("#myTable").DataTable({
-                "ordering": false,
-                // ajax: '/data-penilaian_ami/'+angka,
-                // processing: true,
-                // scrollX: true,
-                // scrollCollapse: true,
-                // 'language': {
-                //     'loadingRecords': '&nbsp;',
-                //     'processing': 'Loading...'
-                // },
-                // columns: [{
-                //         render: function(data, type, row, meta) {
-                //             return meta.row + meta.settings._iDisplayStart + 1;
-                //         }
-                //     },
-                //     {
-                //         data: "nama_grup_instrumen"
-                //     },
-                //     {
-                //         data: "kode_instrumen"
-                //     },
-                //     {
-                //         // data: "keterangan"
-                //         render: function(data, type, row, meta){
-                //             return `
-            //                 INSTRUMEN: ${row.nama_instrumen} <br>
+        axios.get('/data-penilaian_ami/' + angka).then(function(res) {
 
-            //             `
-                //         }
-                //     },
-                //     {
-                //         render: function(data, type, row, meta) {
-                //             return `
-            //                 <input type="number" class="form-control" placeholder="Nilai">
-            //             `
-                //         }
-                //     },
-                // ]
-            })
-        }
+            // let nama = res.data.map(function(e) {
+            //     return e.nama_instrumen
+            // })
 
-        form.onsubmit = (e) => {
+            let nama = res.data.map(function(e, index) {
+                return index + 1;
+            });
 
-            let formData = new FormData(form);
 
-            e.preventDefault();
+            let skor = res.data.map(function(e) {
+                return e.skor;
+            });
 
-            // document.getElementById("tombol_kirim").disabled = true;
+            nilaiami(nama, skor)
+        })
 
-            // console.log(formData);
+        function nilaiami(nama, skor) {
+            Highcharts.chart('spider-chart-container', {
+                chart: {
+                    polar: true,
+                    type: 'line'
+                },
+                title: {
+                    text: 'Spider Chart'
+                },
+                xAxis: {
+                    categories: nama,
+                    tickmarkPlacement: 'on',
+                    lineWidth: 0
+                },
+                yAxis: {
+                    gridLineInterpolation: 'polygon',
+                    lineWidth: 0,
+                    min: 0
+                },
+                series: [{
+                    name: 'Nilai',
+                    data: skor,
+                    pointPlacement: 'on'
+                }]
+            });
 
-            // axios({
-            //         method: 'post',
-            //         url: '/store-user'
-            //         data: formData,
-            //     })
-            //     .then(function(res) {
-            //         //handle success         
-            //         if (res.data.responCode == 1) {
 
-            //             Swal.fire({
-            //                 icon: 'success',
-            //                 title: 'Sukses',
-            //                 text: res.data.respon,
-            //                 timer: 3000,
-            //                 showConfirmButton: false
-            //             })
-
-            //             $("#modal").modal("hide");
-            //             $('#myTable').DataTable().clear().destroy();
-            //             getData()
-
-            //         } else {
-
-            //             console.log('terjadi error');
-            //         }
-
-            //         document.getElementById("tombol_kirim").disabled = false;
-            //     })
-            //     .catch(function(res) {
-            //         document.getElementById("tombol_kirim").disabled = false;
-            //         //handle error
-            //         console.log(res);
-            //     });
         }
     </script>
 @endpush

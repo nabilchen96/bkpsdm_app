@@ -10,14 +10,14 @@ use DB;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 
-class PenilaianController extends Controller
+class LaporanController extends Controller
 {
     public function index()
     {
         $auditors = User::where('role', 'Auditor')->get();
         $kurikulums = KurikulumInstrumen::where('is_aktif', '1')->get();
 
-        return view('backend.penilaian_ami.index', [
+        return view('backend.laporan_ami.index', [
             'auditors' => $auditors,
             'kurikulums' => $kurikulums,
         ]);
@@ -36,17 +36,12 @@ class PenilaianController extends Controller
             })
             ->select(
                 'ja.id as jadwal_ami_id',
-                'ja.kurikulum_instrumen_id',
-                'bi.nama_instrumen',
-                'bi.id as butir_instrumen_id',
                 'bi.grup_instrumen_id',
-                'bi.kode_instrumen',
                 'gi.nama_grup_instrumen',
-                'sg.nama_sub_grup',
-                'sg.id as sub_grup_id',
-                'j.skor'
+                DB::raw('AVG(j.skor) as rata_rata')
             )
             ->where('ja.id', $id)
+            ->groupBy('bi.grup_instrumen_id')
             ->get();
 
 
@@ -64,7 +59,7 @@ class PenilaianController extends Controller
 
         $jadwal_amis = $jadwal_amis->first();
 
-        return view('backend.penilaian_ami.detail', [
+        return view('backend.laporan_ami.detail', [
             'data' => $data,
             'jadwal' => $jadwal_amis
         ]);
@@ -83,40 +78,14 @@ class PenilaianController extends Controller
             })
             ->select(
                 'ja.id as jadwal_ami_id',
-                'ja.kurikulum_instrumen_id',
-                'bi.nama_instrumen',
-                'bi.id as butir_instrumen_id',
                 'bi.grup_instrumen_id',
-                'bi.kode_instrumen',
                 'gi.nama_grup_instrumen',
-                'sg.nama_sub_grup',
-                'sg.id as sub_grup_id',
-                'j.skor'
+                DB::raw('AVG(j.skor) as rata_rata')
             )
             ->where('ja.id', $id)
+            ->groupBy('bi.grup_instrumen_id')
             ->get();
-        
+
         return response()->json($data);
-    }
-
-    public function store(Request $request)
-    {
-
-        Jawaban::UpdateOrcreate(
-            [
-                'jadwal_ami_id' => $request->jadwal_ami_id,
-                'butir_instrumen_id' => $request->butir_instrumen_id
-            ],
-            [
-                'jadwal_ami_id' => $request->jadwal_ami_id,
-                'butir_instrumen_id' => $request->butir_instrumen_id,
-                'grup_instrumen_id' => $request->grup_instrumen_id,
-                'kurikulum_instrumen_id' => $request->kurikulum_instrumen_id,
-                'skor' => $request->skor,
-                'create_oleh' => Auth::id()
-            ]
-        );
-
-        return back();
     }
 }

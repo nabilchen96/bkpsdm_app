@@ -29,7 +29,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data Penilaian AMI</h3>
+                    <h3 class="font-weight-bold">Data Laporan AMI</h3>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
                     },                   
                     {
                         render: function(data, type, row, meta) {
-                            return `<a href="/penilaian_ami/${row.id}">
+                            return `<a href="/laporan_ami/${row.id}">
                                     <i style="font-size: 1.5rem;" class="text-info bi bi-folder2-open"></i>
                                 </a>`
                         }

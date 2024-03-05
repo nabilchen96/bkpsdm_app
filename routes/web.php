@@ -80,6 +80,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/store-penilaian_ami', 'App\Http\Controllers\PenilaianController@store');
     Route::post('/update-penilaian_ami', 'App\Http\Controllers\PenilaianController@update');
     Route::post('/delete-penilaian_ami', 'App\Http\Controllers\PenilaianController@delete');
+
+    // LAPORAN AMI
+    Route::get('/laporan_ami', 'App\Http\Controllers\LaporanController@index');
+    Route::get('/laporan_ami/{id}', 'App\Http\Controllers\LaporanController@detail');
+    Route::get('/data-laporan_ami/{id}', 'App\Http\Controllers\LaporanController@data');
 });
 
 //LOGOUT

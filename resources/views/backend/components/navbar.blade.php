@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('sub_grup') }}">
-                                <span class="menu-title">Sub Grup Instrumen</span>
+                                <span class="menu-title">Sub Grup</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -63,6 +63,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('penilaian_ami') }}">
                                 <span class="menu-title">Penilaian AMI</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('laporan_ami') }}">
+                                <span class="menu-title">Laporan AMI</span>
                             </a>
                         </li>
                     </ul>
