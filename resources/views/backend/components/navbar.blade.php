@@ -32,6 +32,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url('sub_grup') }}">
+                                <span class="menu-title">Sub Grup Instrumen</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url('kurikulum_instrumen') }}">
                                 <span class="menu-title">Kurikulum</span>
                             </a>

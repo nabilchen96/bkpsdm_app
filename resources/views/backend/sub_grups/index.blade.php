@@ -29,7 +29,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data Butir Instrumen </h3>
+                    <h3 class="font-weight-bold">Data Sub Grup Instrumen </h3>
                     
                 </div>
             </div>
@@ -47,9 +47,8 @@
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th>Kriteria / Sub Kriteria</th>
-                                    <th>Kode</th>
-                                    <th>Instrumen</th>
+                                    <th>Grup</th>
+                                    <th>Sub Grup</th>
                                     <th>User</th>
                                     <th width="5%"></th>
                                     <th width="5%"></th>
@@ -70,20 +69,8 @@
                         <h5 class="modal-title m-2" id="exampleModalLabel">User Form</h5>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="kurikulum_id" name="kurikulum_id" value="{{ $kurikulum_id }}">
+                        
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Kode Instrumen</label>
-                            <input name="kode_instrumen" id="kode_instrumen" type="text" placeholder="Kode Instrumen"
-                                class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="kode_instrumen_alert"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Instrumen</label>
-                            <input name="nama_instrumen" id="nama_instrumen" type="text" placeholder="Nama Instrumen"
-                                class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="nama_instrumen_alert"></span>
-                        </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Grup Instrumen</label>
                             <select class="form-control" name="grup_instrumen_id" id="grup_instrumen_id">
@@ -94,18 +81,10 @@
                             <span class="text-danger error" style="font-size: 12px;" id="grup_instrumen_id_alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Sub Grup Instrumen</label>
-                            <select class="form-control" name="sub_grup_id" id="sub_grup_id">
-                                @foreach ($sub_grup as $gi)
-                                    <option value="{{ $gi->id }}">{{ $gi->nama_sub_grup }}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger error" style="font-size: 12px;" id="sub_grup_id_alert"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Keterangan</label>
-                           <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="10"></textarea>
-                           <span class="text-danger error" style="font-size: 12px;" id="keterangan_alert"></span>
+                            <label for="exampleInputEmail1">Nama Sub Grup</label>
+                            <input name="nama_sub_grup" id="nama_sub_grup" type="text" placeholder="Nama Sub Grup"
+                                class="form-control form-control-sm" required>
+                            <span class="text-danger error" style="font-size: 12px;" id="nama_sub_grup_alert"></span>
                         </div>
                         
                         
@@ -125,20 +104,7 @@
     "></span> --}}
 @endsection
 @push('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
-    <script>
-        ClassicEditor
-                .create( document.querySelector( '#keterangan' ),{
-                    minHeight: '500px'
-                } )
-                .then( editor => {
-                        console.log( editor );
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -146,10 +112,9 @@
         })
 
         function getData() {
-            var kurikulum_id = document.getElementById('kurikulum_id').value
             $("#myTable").DataTable({
                 "ordering": false,
-                ajax: '/data-butir_instrumen/'+ kurikulum_id,
+                ajax: '/data-sub_grup',
                 processing: true,
                 scrollX: true,
                 scrollCollapse: true,
@@ -163,18 +128,10 @@
                         }
                     },
                     {
-                        render: function(data, type, row, meta) {
-                            return `
-                                ${row.nama_grup_instrumen} / ${row.nama_sub_grup}
-                            `
-                        }
-                    },
-
-                    {
-                        data: "kode_instrumen"
+                        data: "nama_grup_instrumen"
                     },
                     {
-                        data: "nama_instrumen"
+                        data: "nama_sub_grup"
                     },
                     {
                         data: "name"
@@ -182,7 +139,8 @@
 
                     {
                         render: function(data, type, row, meta) {
-                            return `<a href="edit-butir_instrumen/${row.id}">
+                            return `<a data-toggle="modal" data-target="#modal"
+                                    data-bs-id=` + (row.id) + ` href="javascript:void(0)">
                                     <i style="font-size: 1.5rem;" class="text-success bi bi-grid"></i>
                                 </a>`
                         }
@@ -215,7 +173,8 @@
             if (recipient) {
                 var modal = $(this)
                 modal.find('#id').val(cokData[0].id)
-                modal.find('#nama_butir_instrumen').val(cokData[0].nama_butir_instrumen)
+                modal.find('#nama_sub_grup').val(cokData[0].nama_sub_grup)
+                modal.find('#grup_instrumen_id').val(cokData[0].grup_instrumen_id)
             }
         })
 
@@ -229,7 +188,7 @@
 
             axios({
                     method: 'post',
-                    url: formData.get('id') == '' ? '/store-butir_instrumen' : '/update-butir_instrumen',
+                    url: formData.get('id') == '' ? '/store-sub_grup' : '/update-sub_grup',
                     data: formData,
                 })
                 .then(function(res) {
@@ -279,7 +238,7 @@
             }).then((result) => {
 
                 if (result.value) {
-                    axios.post('/delete-butir_instrumen', {
+                    axios.post('/delete-sub_grup', {
                             id
                         })
                         .then((response) => {
