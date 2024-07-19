@@ -17,7 +17,9 @@ class UserController extends Controller
 
     public function data(){
         
-        $user = DB::table('users');
+        $user = Request('user');
+
+        $user = DB::table('users')->where('role', $user);
 
         $data_user = Auth::user();
         $user = $user->get();

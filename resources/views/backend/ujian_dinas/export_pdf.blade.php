@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <style>
+        @media print {
+            @page {
+                size: landscape;
+            }
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Times', 'serif';
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    @if (@$instansi)
+        <table class="table table-bordered" style="width: 100%;">
+            <tr>
+                <td class="p-0 text-center" style="width: 20%;">
+                    <img width="100%"
+                        @if ($instansi->logo) src="{{ url('logo') }}/{{ $instansi->logo }}"
+                    @else @endif
+                        alt="">
+                </td>
+                <td class="p-0 text-center" style="width: 80%;">
+                    <h4>{{ strtoupper($instansi->nama_instansi) }}</h4>
+                    <h4>{{ strtoupper($instansi->nama_lembaga) }}</h4>
+                    <h4>@php
+                        echo strtoupper('Provinsi Papua Tengah');
+                    @endphp</h6>
+                        <p>{{ $instansi->alamat }}</p>
+                </td>
+            </tr>
+        </table>
+        <hr style="border: 2px solid black;">
+    @endif
+    <br>
+    <h4 class="text-center mt-2"><u>DAFTAR PESERTA UJIAN DINAS</u></h4>
+    <br>
+    <table class="table table-striped table-bordered" style="width: 100%;">
+        <thead class="bg-info">
+            <tr>
+                <td>No</td>
+                <td>Nama Pegawai</td>
+                <td>NIP</td>
+                <td>Pangkat Golongan</td>
+                <td>Jabatan</td>
+                <td>Unit Kerja</td>
+                <td>Instansi</td>
+                <td>Jenis Ujian</td>
+                <td>Foto</td>
+                <td>Keterangan</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data as $k => $item)
+                <tr>
+                    <td>{{ $k + 1 }}</td>
+                    <td>{{ $item->nama }}</td>
+                    <td>{{ $item->nip }}</td>
+                    <td>{{ $item->pangkat_golongan }}</td>
+                    <td>{{ $item->jabatan }}</td>
+                    <td>{{ $item->unit_kerja }}</td>
+                    <td>{{ $item->instansi }}</td>
+                    <td>{{ $item->jenis_ujian }}</td>
+                    <td>
+                        <img width="50px" src="{{ asset('foto') }}/{{ $item->foto }}" alt="">
+                    </td>
+                    <td>{{ $item->keterangan }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="footer">
+        <table class="table table-borderless signature-table" style="width: 100%;">
+            <tr>
+                <td colspan="5" class="text-center">
+                    KEPALA BADAN
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span style="margin-right: 50%;">(</span><span>)</span>
+                </td>
+                <td colspan="5" class="text-center">
+                    KEPALA BAGIAN
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span style="margin-right: 50%;">(</span><span>)</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

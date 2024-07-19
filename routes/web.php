@@ -19,10 +19,6 @@ Route::get('/login', 'App\Http\Controllers\AuthController@login')->name('login')
 Route::get('/', 'App\Http\Controllers\AuthController@login');
 Route::post('/loginProses', 'App\Http\Controllers\AuthController@loginProses');
 
-// Route::get('/', function(){
-//     return view('frontend.landing');
-// });
-
 //BACKEND
 Route::group(['middleware' => 'auth'], function () {
 
@@ -36,55 +32,34 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-user', 'App\Http\Controllers\UserController@update');
     Route::post('/delete-user', 'App\Http\Controllers\UserController@delete');
 
-    // GRUP INSTRUMEN
-    Route::get('/grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@index');
-    Route::get('/data-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@data');
-    Route::post('/store-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@store');
-    Route::post('/update-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@update');
-    Route::post('/delete-grup_instrumen', 'App\Http\Controllers\GrupInstrumenController@delete');
+    //INSTANSI
+    Route::get('/instansi', 'App\Http\Controllers\InstansiController@index');
+    Route::get('/data-instansi', 'App\Http\Controllers\InstansiController@data');
+    Route::post('/store-instansi', 'App\Http\Controllers\InstansiController@store');
 
-    // SUB GRUP INSTRUMEN
-    Route::get('/sub_grup', 'App\Http\Controllers\SubGrupController@index');
-    Route::get('/data-sub_grup', 'App\Http\Controllers\SubGrupController@data');
-    Route::post('/store-sub_grup', 'App\Http\Controllers\SubGrupController@store');
-    Route::post('/update-sub_grup', 'App\Http\Controllers\SubGrupController@update');
-    Route::post('/delete-sub_grup', 'App\Http\Controllers\SubGrupController@delete');
+    //PEGAWAI
+    Route::get('/pegawai', 'App\Http\Controllers\PegawaiController@index');
+    Route::get('/data-pegawai', 'App\Http\Controllers\PegawaiController@data');
+    Route::post('/store-pegawai', 'App\Http\Controllers\PegawaiController@store');
+    Route::post('/update-pegawai', 'App\Http\Controllers\PegawaiController@update');
+    Route::post('/delete-pegawai', 'App\Http\Controllers\PegawaiController@delete');
 
-    // KURIKULUM INSTRUMEN
-    Route::get('/kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@index');
-    Route::get('/data-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@data');
-    Route::post('/store-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@store');
-    Route::post('/update-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@update');
-    Route::post('/delete-kurikulum_instrumen', 'App\Http\Controllers\KurikulumInstrumenController@delete');
+    //UJIAN DINAS
+    Route::get('/ujian-dinas', 'App\Http\Controllers\UjianDinasController@index');
+    Route::get('/data-ujian-dinas', 'App\Http\Controllers\UjianDinasController@data');
+    Route::post('/store-ujian-dinas', 'App\Http\Controllers\UjianDinasController@store');
+    Route::post('/update-ujian-dinas', 'App\Http\Controllers\UjianDinasController@update');
+    Route::post('/delete-ujian-dinas', 'App\Http\Controllers\UjianDinasController@delete');
+    Route::post('/export-ujian-dinas', 'App\Http\Controllers\UjianDinasController@export');
 
-    // BUTIR INSTRUMEN
-    Route::get('/butir_instrumen/{kurikulum_id}', 'App\Http\Controllers\ButirInstrumenController@index');
-    Route::get('/data-butir_instrumen/{kurikulum_id}', 'App\Http\Controllers\ButirInstrumenController@data');
-    Route::get('butir_instrumen/edit-butir_instrumen/{id}', 'App\Http\Controllers\ButirInstrumenController@edit');
-    Route::post('/store-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@store');
-    Route::post('/update-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@update');
-    Route::post('/delete-butir_instrumen', 'App\Http\Controllers\ButirInstrumenController@delete');
+    //PRAJABATAN
+    Route::get('/prajabatan', 'App\Http\Controllers\PrajabatanController@index');
+    Route::get('/data-prajabatan', 'App\Http\Controllers\PrajabatanController@data');
+    Route::post('/store-prajabatan', 'App\Http\Controllers\PrajabatanController@store');
+    Route::post('/update-prajabatan', 'App\Http\Controllers\PrajabatanController@update');
+    Route::post('/delete-prajabatan', 'App\Http\Controllers\PrajabatanController@delete');
+    Route::post('/export-prajabatan', 'App\Http\Controllers\PrajabatanController@export');
 
-    // JADWAL AMI
-    Route::get('/jadwal_ami', 'App\Http\Controllers\JadwalAmiController@index');
-    Route::get('/data-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@data');
-    Route::get('jadwal_ami/edit-jadwal_ami/{id}', 'App\Http\Controllers\JadwalAmiController@edit');
-    Route::post('/store-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@store');
-    Route::post('/update-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@update');
-    Route::post('/delete-jadwal_ami', 'App\Http\Controllers\JadwalAmiController@delete');
-
-    // PENILAIAN AMI
-    Route::get('/penilaian_ami', 'App\Http\Controllers\PenilaianController@index');
-    Route::get('/penilaian_ami/{id}', 'App\Http\Controllers\PenilaianController@detail');
-    Route::get('/data-penilaian_ami/{id}', 'App\Http\Controllers\PenilaianController@data');
-    Route::post('/store-penilaian_ami', 'App\Http\Controllers\PenilaianController@store');
-    Route::post('/update-penilaian_ami', 'App\Http\Controllers\PenilaianController@update');
-    Route::post('/delete-penilaian_ami', 'App\Http\Controllers\PenilaianController@delete');
-
-    // LAPORAN AMI
-    Route::get('/laporan_ami', 'App\Http\Controllers\LaporanController@index');
-    Route::get('/laporan_ami/{id}', 'App\Http\Controllers\LaporanController@detail');
-    Route::get('/data-laporan_ami/{id}', 'App\Http\Controllers\LaporanController@data');
 });
 
 //LOGOUT

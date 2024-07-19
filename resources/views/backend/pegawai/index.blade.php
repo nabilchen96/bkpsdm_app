@@ -29,7 +29,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-xl-0">
-                    <h3 class="font-weight-bold">Data User</h3>
+                    <h3 class="font-weight-bold">Data Pegawai</h3>
                 </div>
             </div>
         </div>
@@ -47,10 +47,13 @@
                                 <tr>
                                     <th width="5%">No</th>
                                     <th width="5%">Edit</th>
-                                    <th>Hapus</th>
-                                    <th>Name</th>
+                                    <th width="5%">Hapus</th>
+                                    <th>Nama</th>
+                                    <th>NIP</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Alamat</th>
                                     <th>Email</th>
-                                    <th>Role</th>
+                                    <th>No Telpon</th>
                                 </tr>
                             </thead>
                         </table>
@@ -65,35 +68,43 @@
             <div class="modal-content">
                 <form id="form">
                     <div class="modal-header p-3">
-                        <h5 class="modal-title m-2" id="exampleModalLabel">User Form</h5>
+                        <h5 class="modal-title m-2" id="exampleModalLabel">Pegawai Form</h5>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input name="email" id="email" type="email" placeholder="email"
-                                class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="email_alert"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Lengkap</label>
-                            <input name="name" id="name" type="text" placeholder="Nama Lengkap"
+                            <label>Nama Lengkap <sup class="text-danger">*</sup></label>
+                            <input name="nama" id="nama" type="text" placeholder="Nama Lengkap"
                                 class="form-control form-control-sm" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input name="password" id="password" type="password" placeholder="Password"
+                            <label>NIP <sup class="text-danger">*</sup></label>
+                            <input name="nip" id="nip" type="text" placeholder="nip"
                                 class="form-control form-control-sm" required>
-                            <span class="text-danger error" style="font-size: 12px;" id="password_alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Role</label>
-                            <select name="role" class="form-control" id="role" required>
-                                <option>Admin</option>
-                                <option>Operator</option>
+                            <label>Jenis Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" required class="form-control form-control-sm">
+                                <option value="">PILIH JENIS KELAMIN</option>
+                                <option>Laki-laki</option>
+                                <option>Perempuan</option>
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" id="email" placeholder="Email"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label>No Telepon</label>
+                            <input type="text" name="no_telepon" id="no_telepon" placeholder="Nomor Telepon"
+                                class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat</label>
+                            <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control form-control-sm"
+                                placeholder="Alamat"></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer p-3">
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
@@ -103,11 +114,6 @@
             </div>
         </div>
     </div>
-    {{-- <span style="
-    width: 200px !important;
-    white-space: normal;
-    display: inline-block !important;
-    "></span> --}}
 @endsection
 @push('script')
     <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
@@ -119,21 +125,9 @@
 
         function getData() {
 
-            // Mendapatkan URL saat ini
-            const url = window.location.href;
-
-            // Membuat objek URL
-            const urlObj = new URL(url);
-
-            // Menggunakan URLSearchParams untuk menguraikan query string
-            const params = new URLSearchParams(urlObj.search);
-
-            // Mengambil nilai parameter 'id'
-            const user = params.get('user');
-
             $("#myTable").DataTable({
                 "ordering": false,
-                ajax: '/data-user?user=' + user,
+                ajax: '{{ url("data-pegawai") }}',
                 processing: true,
                 scrollX: true,
                 scrollCollapse: true,
@@ -163,13 +157,22 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "nama"
+                    },
+                    {
+                        data: "nip"
+                    },
+                    {
+                        data: "jenis_kelamin"
+                    },
+                    {
+                        data: "alamat"
                     },
                     {
                         data: "email"
                     },
                     {
-                        data: "role"
+                        data: "no_telepon"
                     },
                 ]
             })
@@ -192,8 +195,10 @@
                 var modal = $(this)
                 modal.find('#id').val(cokData[0].id)
                 modal.find('#email').val(cokData[0].email)
-                modal.find('#name').val(cokData[0].name)
-                modal.find('#role').val(cokData[0].role)
+                modal.find('#nama').val(cokData[0].nama)
+                modal.find('#jenis_kelamin').val(cokData[0].jenis_kelamin)
+                modal.find('#alamat').val(cokData[0].alamat)
+                modal.find('#no_telepon').val(cokData[0].no_telepon)
                 modal.find('#nip').val(cokData[0].nip)
             }
         })
@@ -208,7 +213,7 @@
 
             axios({
                     method: 'post',
-                    url: formData.get('id') == '' ? '/store-user' : '/update-user',
+                    url: formData.get('id') == '' ? '{{ url("store-pegawai") }}' : '{{ url("update-pegawai") }}',
                     data: formData,
                 })
                 .then(function(res) {
@@ -254,7 +259,7 @@
             }).then((result) => {
 
                 if (result.value) {
-                    axios.post('/delete-user', {
+                    axios.post('{{ url("delete-pegawai") }}', {
                             id
                         })
                         .then((response) => {

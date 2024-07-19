@@ -93,7 +93,7 @@
 
         axios({
                 method: 'post',
-                url: '/loginProses',
+                url: '{{ url("loginProses") }}',
                 data: formData,
             })
             .then(function(res) {

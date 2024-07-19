@@ -6,13 +6,23 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('instansi') }}">
+                <i class="bi bi-building menu-icon"></i>
+                <span class="menu-title">Instansi</span>
+            </a>
+        </li>
         <style>
             .sidebar .nav .nav-item .nav-link {
                 white-space: normal;
             }
+
+            .sub-menu-title {
+                font-size: 12px !important;
+            }
         </style>
         @if (Auth::user()->role == 'Admin')
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
@@ -23,55 +33,73 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('user') }}">
-                                <span class="menu-title">User</span>
+                                <span class="menu-title sub-menu-title">User</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('grup_instrumen') }}">
-                                <span class="menu-title">Grup</span>
+                            <a class="nav-link" href="{{ url('instansi') }}">
+                                <span class="menu-title sub-menu-title">instansi</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('sub_grup') }}">
-                                <span class="menu-title">Sub Grup</span>
+                            <a class="nav-link" href="{{ url('pegawai') }}">
+                                <span class="menu-title sub-menu-title">Pegawai</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('kurikulum_instrumen') }}">
-                                <span class="menu-title">Kurikulum</span>
-                            </a>
-                        </li>
-                       
                     </ul>
                 </div>
-            </li>
+            </li> --}}
         @endif
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false"
-                    aria-controls="ui-basic">
-                    <i class="bi-window-plus menu-icon"></i>
-                    <span class="menu-title" style="margin-top: 7px;">AMI</span>
-                    <i style="margin-top: 7px;" class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic2">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('jadwal_ami') }}">
-                                <span class="menu-title">Jadwal AMI</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('penilaian_ami') }}">
-                                <span class="menu-title">Penilaian AMI</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('laporan_ami') }}">
-                                <span class="menu-title">Laporan AMI</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+                <i class="bi bi-file-earmark-text menu-icon"></i>
+                <span class="menu-title" style="margin-top: 7px;">
+                    Master
+                </span>
+                <i style="margin-top: 7px;" class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('pegawai') }}">
+                            <span class="menu-title sub-menu-title">Pegawai</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('ujian-dinas') }}">
+                            <span class="menu-title sub-menu-title">Ujian Dinas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('prajabatan') }}">
+                            <span class="menu-title sub-menu-title">Prajabatan</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#user" aria-expanded="false" aria-controls="ui-basic">
+                <i class="bi bi-person-circle menu-icon"></i>
+                <span class="menu-title" style="margin-top: 7px;">
+                    Pengguna
+                </span>
+                <i style="margin-top: 7px;" class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="user">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('user') }}?user=Admin">
+                            <span class="menu-title sub-menu-title">Admin</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('user') }}?user=Operator">
+                            <span class="menu-title sub-menu-title">Operator</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
 </nav>
