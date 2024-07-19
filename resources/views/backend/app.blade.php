@@ -107,7 +107,8 @@
                 style="box-shadow: 0px 5px 21px -5px #CDD1E1;">
                 <a class="navbar-brand brand-logo mr-5" style="font-size: 16px; margin-left: 20px;"
                     href="{{ url('/') }}">
-                    <h3><b>BKPSDM</b></h3>
+                    <h3 style="margin-bottom: 0;"><b>BKPSDM</b></h3>
+                    <span style="font-size: 12px;">{{ DB::table('instansis')->value('kabupaten') }}</span>
                 </a>
                 <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">
                     <h4><b><i class="bi bi-calculator"></i></b></h4>

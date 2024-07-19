@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="col-lg-3">
+                <div class="col-lg-3 mb-4">
                     <div class="card bg-gradient-success card-img-holder text-white">
                         <div class="card-body">
                             <img src="https://themewagon.github.io/purple-react/static/media/circle.953c9ca0.svg" class="card-img-absolute" alt="circle">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 mb-4">
                     <div class="card bg-gradient-primary card-img-holder text-white">
                         <div class="card-body">
                             <img src="https://themewagon.github.io/purple-react/static/media/circle.953c9ca0.svg" class="card-img-absolute" alt="circle">
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 mb-4">
                     <div class="card bg-gradient-info card-img-holder text-white">
                         <div class="card-body">
                             <img src="https://themewagon.github.io/purple-react/static/media/circle.953c9ca0.svg" class="card-img-absolute" alt="circle">
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 mb-4">
                     <div class="card bg-gradient-danger card-img-holder text-white">
                         <div class="card-body">
                             <img src="https://themewagon.github.io/purple-react/static/media/circle.953c9ca0.svg" class="card-img-absolute" alt="circle">

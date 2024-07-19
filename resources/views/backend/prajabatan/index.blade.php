@@ -136,11 +136,13 @@
                             <label>File</label>
                             <input name="file" id="file" type="file" placeholder="File"
                                 class="form-control form-control-sm">
+                            <span style="font-size: 12px;" class="text-danger">*Upload hanya file pdf</span>
                         </div>
                         <div class="form-group">
                             <label>Foto</label>
                             <input name="foto" id="foto" type="file" placeholder="Foto"
                                 class="form-control form-control-sm">
+                            <span style="font-size: 12px" class="text-danger">*Upload hanya file jpg, png</span>
                         </div>
                         <div class="form-group">
                             <label>Keterangan</label>
@@ -344,6 +346,13 @@
                         getData()
 
                     } else {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: res.data.respon,
+                            confirmButtonText: 'OK'
+                        })
 
                         console.log('terjadi error');
                     }

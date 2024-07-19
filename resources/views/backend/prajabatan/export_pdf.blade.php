@@ -18,11 +18,11 @@
             font-family: 'Times New Roman', 'Times', 'serif';
         }
 
-        .footer {
+        /* .footer {
             position: absolute;
             bottom: 0;
             width: 100%;
-        }
+        } */
     </style>
 </head>
 
@@ -30,18 +30,20 @@
     @if (@$instansi)
         <table class="table table-bordered" style="width: 100%;">
             <tr>
-                <td class="p-0 text-center" style="width: 20%;">
-                    <img width="100%"
+                <td class="p-0 text-center" style="vertical-align: middle; width: 20%;">
+                    <img width="80%"
                         @if (@$instansi->logo) src="{{ url('logo') }}/{{ $instansi->logo }}"
                     @else @endif>
                 </td>
                 <td class="p-0 text-center" style="width: 80%;">
                     <h4>{{ strtoupper(@$instansi->nama_instansi) }}</h4>
                     <h4>{{ strtoupper(@$instansi->nama_lembaga) }}</h4>
-                    <h4>@php
-                        echo strtoupper('Provinsi Papua Tengah');
-                    @endphp</h6>
-                        <p>{{ @$instansi->alamat }}</p>
+                    <h4>
+                        @php
+                            echo strtoupper(@$instansi->provinsi);
+                        @endphp
+                    </h4>
+                    <p>{{ @$instansi->alamat }}</p>
                 </td>
             </tr>
         </table>
@@ -50,7 +52,7 @@
     <br>
     <h4 class="text-center mt-2"><u>DAFTAR PESERTA PRAJABATAN</u></h4>
     <br>
-    <table class="table table-striped table-bordered" style="width: 100%;">
+    <table class="table table-striped table-bordered mb-5" style="width: 100%;">
         <thead class="bg-info">
             <tr>
                 <td>No</td>
@@ -83,23 +85,33 @@
         </tbody>
     </table>
     <div class="footer">
-        <table class="table table-borderless signature-table" style="width: 100%;">
+        <table class="table table-borderless" style="width: 100%;">
             <tr>
                 <td colspan="5" class="text-center">
-                    KEPALA BADAN
+                    KEPALA BADAN <br> PENGEMBANGAN SUMBER DAYA MANUSIA
                     <br>
                     <br>
                     <br>
                     <br>
-                    <span style="margin-right: 50%;">(</span><span>)</span>
+                    <br>
+                    <p>
+                        ( {{ $instansi->nama_kepala_badan }} ) <br>
+                        {{ $instansi->pangkat_kepala_badan }} <br>
+                        NIP: {{ $instansi->nip_kepala_badan }}
+                    </p>
                 </td>
                 <td colspan="5" class="text-center">
-                    KEPALA BAGIAN
+                    KEPALA BIDANG <br> PENGEMBANGAN KARIR DAN DIKLAT
                     <br>
                     <br>
                     <br>
                     <br>
-                    <span style="margin-right: 50%;">(</span><span>)</span>
+                    <br>
+                    <p>
+                        ( {{ $instansi->nama_kepala_bidang }} ) <br>
+                        {{ $instansi->pangkat_kepala_bidang }} <br>
+                        NIP: {{ $instansi->nip_kepala_bidang }}
+                    </p>
                 </td>
             </tr>
         </table>

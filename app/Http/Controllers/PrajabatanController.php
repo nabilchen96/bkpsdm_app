@@ -36,12 +36,22 @@ class PrajabatanController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id_pegawai' => 'required',
+            'file' => 'nullable|mimes:pdf',
+            'foto' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessages = '';
+
+            //LAKUKAN PERULANGAN ERROR UNTUK DIGABUNG
+            foreach ($errors as $k => $error) {
+                $errorMessages .= $error . ", ";
+            }
+
             $data = [
                 'responCode' => 0,
-                'respon' => $validator->errors()
+                'respon' => 'Gagal menyimpan data dengan alasan. ' . rtrim($errorMessages, ', ')
             ];
         } else {
 
@@ -80,13 +90,23 @@ class PrajabatanController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'id' => 'required'
+            'id' => 'required',
+            'file' => 'nullable|mimes:pdf',
+            'foto' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessages = '';
+
+            //LAKUKAN PERULANGAN ERROR UNTUK DIGABUNG
+            foreach ($errors as $k => $error) {
+                $errorMessages .= $error . ", ";
+            }
+
             $data = [
                 'responCode' => 0,
-                'respon' => $validator->errors()
+                'respon' => 'Gagal menyimpan data dengan alasan. ' . rtrim($errorMessages, ', ')
             ];
         } else {
 

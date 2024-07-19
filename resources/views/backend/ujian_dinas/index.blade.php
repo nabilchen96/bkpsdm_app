@@ -145,11 +145,13 @@
                             <label>File</label>
                             <input name="file" id="file" type="file" placeholder="File"
                                 class="form-control form-control-sm">
+                            <span style="font-size: 12px;" class="text-danger">*Upload hanya file pdf</span>
                         </div>
                         <div class="form-group">
                             <label>Foto</label>
                             <input name="foto" id="foto" type="file" placeholder="Foto"
                                 class="form-control form-control-sm">
+                            <span style="font-size: 12px" class="text-danger">*Upload hanya file jpg, png</span>
                         </div>
                         <div class="form-group">
                             <label>Keterangan</label>
@@ -177,11 +179,13 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Cari Tanggal Awal <sup class="text-danger">*</sup></label>
-                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control form-control-sm" required>
+                            <input type="date" name="tanggal_awal" id="tanggal_awal"
+                                class="form-control form-control-sm" required>
                         </div>
                         <div class="form-group">
                             <label>Cari Tanggal Akhir <sup class="text-danger">*</sup></label>
-                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control form-control-sm" required>
+                            <input type="date" name="tanggal_akhir" id="tanggal_akhir"
+                                class="form-control form-control-sm" required>
                         </div>
                         <div class="form-group">
                             <label>Jenis Ujian <sup class="text-danger">*</sup></label>
@@ -214,7 +218,7 @@
 
             $("#myTable").DataTable({
                 "ordering": false,
-                ajax: '{{ url("data-ujian-dinas") }}',
+                ajax: '{{ url('data-ujian-dinas') }}',
                 processing: true,
                 scrollX: true,
                 scrollCollapse: true,
@@ -246,7 +250,7 @@
                     {
                         render: function(data, type, row, meta) {
                             if (row.file) {
-                                return `<a href="{{ url("file") }}/${row.file}">
+                                return `<a href="{{ url('file') }}/${row.file}">
                                     <i style="font-size: 1.8rem;" class="text-primary bi bi-cloud-arrow-down"></i>
                                 </a>`
                             } else {
@@ -263,7 +267,7 @@
                                     width: 50px;
                                     background: grey;
                                     border-radius: 10px;
-                                    background-image: url('{{ url("foto") }}/${row.foto}');
+                                    background-image: url('{{ url('foto') }}/${row.foto}');
                                     background-position: center;
                                     background-size: cover;
                                 ">
@@ -342,7 +346,8 @@
 
             axios({
                     method: 'post',
-                    url: formData.get('id') == '' ? '{{ url("store-ujian-dinas") }}' : '{{ url("update-ujian-dinas") }}',
+                    url: formData.get('id') == '' ? '{{ url('store-ujian-dinas') }}' :
+                        '{{ url('update-ujian-dinas') }}',
                     data: formData,
                 })
                 .then(function(res) {
@@ -363,7 +368,12 @@
 
                     } else {
 
-                        console.log('terjadi error');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: res.data.respon,
+                            confirmButtonText: 'OK'
+                        })
                     }
 
                     document.getElementById("tombol_kirim").disabled = false;
@@ -388,7 +398,7 @@
             }).then((result) => {
 
                 if (result.value) {
-                    axios.post('{{ url("delete-ujian-dinas") }}', {
+                    axios.post('{{ url('delete-ujian-dinas') }}', {
                             id
                         })
                         .then((response) => {

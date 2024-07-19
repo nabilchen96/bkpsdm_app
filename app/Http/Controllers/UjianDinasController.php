@@ -36,12 +36,22 @@ class UjianDinasController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id_pegawai' => 'required',
+            'file' => 'nullable|mimes:pdf',
+            'foto' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessages = '';
+
+            //LAKUKAN PERULANGAN ERROR UNTUK DIGABUNG
+            foreach ($errors as $k => $error) {
+                $errorMessages .= $error . ", ";
+            }
+
             $data = [
                 'responCode' => 0,
-                'respon' => $validator->errors()
+                'respon' => 'Gagal menyimpan data dengan alasan. ' . rtrim($errorMessages, ', ')
             ];
         } else {
 
@@ -81,13 +91,23 @@ class UjianDinasController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'id' => 'required'
+            'id' => 'required',
+            'file' => 'nullable|mimes:pdf',
+            'foto' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $errorMessages = '';
+
+            //LAKUKAN PERULANGAN ERROR UNTUK DIGABUNG
+            foreach ($errors as $k => $error) {
+                $errorMessages .= $error . ", ";
+            }
+
             $data = [
                 'responCode' => 0,
-                'respon' => $validator->errors()
+                'respon' => 'Gagal menyimpan data dengan alasan. ' . rtrim($errorMessages, ', ')
             ];
         } else {
 
@@ -146,33 +166,33 @@ class UjianDinasController extends Controller
         $tanggal_akhir = Carbon::createFromFormat('Y-m-d', $request->tanggal_akhir)->endOfDay();
 
 
-        if($kategori == 'Semua'){
+        if ($kategori == 'Semua') {
             $data = DB::table('ujian_dinas')
-                    ->leftJoin('pegawais', 'pegawais.id', '=', 'ujian_dinas.id_pegawai')
-                    ->whereBetween('ujian_dinas.created_at', [$tanggal_awal, $tanggal_akhir])
-                    ->select(
-                        'pegawais.nama', 
-                        'pegawais.nip',
-                        'ujian_dinas.*'
-                    )
-                    ->get();
-        }else{
+                ->leftJoin('pegawais', 'pegawais.id', '=', 'ujian_dinas.id_pegawai')
+                ->whereBetween('ujian_dinas.created_at', [$tanggal_awal, $tanggal_akhir])
+                ->select(
+                    'pegawais.nama',
+                    'pegawais.nip',
+                    'ujian_dinas.*'
+                )
+                ->get();
+        } else {
             $data = DB::table('ujian_dinas')
-                    ->leftJoin('pegawais', 'pegawais.id', '=', 'ujian_dinas.id_pegawai')
-                    ->where('jenis_ujian', $kategori)
-                    ->whereBetween('ujian_dinas.created_at', [$tanggal_awal, $tanggal_akhir])
-                    ->select(
-                        'pegawais.nama', 
-                        'pegawais.nip',
-                        'ujian_dinas.*'
-                    )
-                    ->get();
+                ->leftJoin('pegawais', 'pegawais.id', '=', 'ujian_dinas.id_pegawai')
+                ->where('jenis_ujian', $kategori)
+                ->whereBetween('ujian_dinas.created_at', [$tanggal_awal, $tanggal_akhir])
+                ->select(
+                    'pegawais.nama',
+                    'pegawais.nip',
+                    'ujian_dinas.*'
+                )
+                ->get();
         }
 
         $instansi = DB::table('instansis')->first();
 
         $laporan = Pdf::loadview('backend.ujian_dinas.export_pdf', [
-            'data' => $data, 
+            'data' => $data,
             'instansi' => $instansi
         ])->setPaper('a4', 'landscape');
 
