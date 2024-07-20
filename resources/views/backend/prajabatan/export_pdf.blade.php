@@ -77,7 +77,9 @@
                     <td>{{ $item->unit_kerja }}</td>
                     <td>{{ $item->instansi }}</td>
                     <td>
-                        <img width="50px" src="{{ asset('foto') }}/{{ $item->foto }}" alt="">
+                        @if ($item->foto)
+                            <img width="50px" src="{{ asset('foto') }}/{{ $item->foto }}" alt="">
+                        @endif
                     </td>
                     <td>{{ $item->keterangan }}</td>
                 </tr>
@@ -88,7 +90,7 @@
         <table class="table table-borderless" style="width: 100%;">
             <tr>
                 <td colspan="5" class="text-center">
-                    KEPALA BADAN <br> PENGEMBANGAN SUMBER DAYA MANUSIA
+                    KEPALA BADAN <br> KEPEGAWAIAN DAN PENGEMBANGAN <br> SUMBER DAYA MANUSIA
                     <br>
                     <br>
                     <br>
@@ -101,7 +103,8 @@
                     </p>
                 </td>
                 <td colspan="5" class="text-center">
-                    KEPALA BIDANG <br> PENGEMBANGAN KARIR DAN DIKLAT
+                    KEPALA BIDANG  <br> PENGEMBANGAN KARIR DAN DIKLAT
+                    <br>
                     <br>
                     <br>
                     <br>
